@@ -2,7 +2,6 @@ version: "3"
 
 services:
   corgi-db:
-    container_name: corgi_db
     image: postgres:13
     hostname: corgi-db
     environment:
@@ -12,8 +11,8 @@ services:
       - APP_DB_PASS=test
       - APP_DB_NAME=corgi_db
     volumes:
-      - ./db/init.sh:/docker-entrypoint-initdb.d/01-init.sh
-      - ./db/dbdata:/var/lib/postgresql/data
+      - ./init.sh:/docker-entrypoint-initdb.d/01-init.sh
+      - ./dbdata:/var/lib/postgresql/data
     ports:
       - "5433:5432"
     healthcheck:
@@ -24,7 +23,6 @@ services:
     restart: always
 
   corgi-redis:
-    container_name: corgi_redis
     privileged: true
     depends_on:
       corgi-db:
